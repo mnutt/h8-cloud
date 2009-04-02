@@ -39,10 +39,8 @@ function alreadyH8ed( id ) {
 
 function addH8Links(){
 	var heartLinks = document.evaluate(
-	    '//div.actions/div/a[class="fav-action"]',
+	    '//a[@title="favorite this update"]',
 	    document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-  GM_log(heartLinks);
-
 	for (var i = 0; i < heartLinks.snapshotLength; i++) {
 	    var thisLink	= heartLinks.snapshotItem(i);
 			var thisID		= thisLink.id.split("status_star_")[1];
@@ -77,6 +75,13 @@ function hide( id ) {
 
 		post.parentNode.insertBefore(hidden_notice, post.nextSibling);
 	}
+}
+
+function h8Event(event){
+	var link = event.target;
+	var id = link.href.split("/").pop();
+
+	h8Post(id, link);
 }
 
 function h8Post( id, link ){
